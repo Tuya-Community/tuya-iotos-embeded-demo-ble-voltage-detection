@@ -1,5 +1,5 @@
-#ifndef TUYA_BLE_APP_DEMO_H_
-#define TUYA_BLE_APP_DEMO_H_
+#ifndef TUYA_BLE_APP_MAIN_H_
+#define TUYA_BLE_APP_MAIN_H_
 
 
 #ifdef __cplusplus

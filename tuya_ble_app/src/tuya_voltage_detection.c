@@ -1,4 +1,4 @@
-#include "voltage_detection.h"
+#include "tuya_voltage_detection.h"
 #include "gpio_8258.h"
 #include "adc.h"
 #include "dfifo.h"
@@ -71,7 +71,7 @@ set misc channel use differential_mode,
       //dfifo setting will lose in suspend/deep, so we need config it  every time
       adc_config_misc_channel_buf((u16 *)adc_dat_buf,  ADC_SAMPLE_NUM<<2);  //size: ADC_SAMPLE_NUM*4
       dfifo_enable_dfifo2();
- //get adc sample data and sort these data
+      //get adc sample data and sort these data
       for(i=0;i<ADC_SAMPLE_NUM;i++){
             while(!adc_dat_buf[i]);
             if(adc_dat_buf[i] & BIT(13)){  //14 bit resolution, BIT(13)  is sign bit, 1 means negative voltage in differential_mode
@@ -100,9 +100,9 @@ set misc channel use differential_mode,
                   }
             }
       }
-//
+
       dfifo_disable_dfifo2();   //misc channel data dfifo disable
-// get average value from raw data(abandon some small and big data ),  then filter with history data //
+      // get average value from raw data(abandon some small and big data ),  then filter with history data //
       u32 adc_average = (adc_sample[2] + adc_sample[3] + adc_sample[4] +  adc_sample[5])/4;
 #if 1
       adc_result = adc_average;

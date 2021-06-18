@@ -7,11 +7,11 @@
 #include "tuya_ble_sdk_version.h"
 #include "tuya_ble_utils.h"
 #include "tuya_ble_event.h"
-#include "tuya_ble_app_demo.h"
+#include "tuya_ble_app_main.h"
 #include "tuya_ble_log.h"
 #include "tuya_ota.h"
 #include "tuya_ble_common.h"
-#include "voltage_detection.h"
+#include "tuya_voltage_detection.h"
 
 
 static tuya_ble_device_param_t device_param = {0};
@@ -57,6 +57,7 @@ void custom_data_process(int32_t evt_id,void *data)
             break;
   
     }
+
 }
 
 
@@ -89,7 +90,6 @@ static void tuya_cb_handler(tuya_ble_cb_evt_param_t* event)
     switch (event->evt)
     {
     case TUYA_BLE_CB_EVT_CONNECTE_STATUS:
-    	//tuya_uart_send_ble_state();
         TUYA_APP_LOG_INFO("received tuya ble conncet status update event,current connect status = %d",event->connect_status);
         break;
     case TUYA_BLE_CB_EVT_DP_WRITE:
@@ -98,16 +98,12 @@ static void tuya_cb_handler(tuya_ble_cb_evt_param_t* event)
         memcpy(dp_data_array,event->dp_write_data.p_data,dp_data_len);        
         TUYA_APP_LOG_HEXDUMP_DEBUG("received dp write data :",dp_data_array,dp_data_len);
         sn = 0;
-        tuya_ble_dp_data_report(dp_data_array,dp_data_len);//1
-//        dp_data_receive(dp_data_array);
-        //custom_evt_1_send_test(dp_data_len);
-        //tuya_ble_dp_data_report(dp_data_test,sizeof(dp_data_test));
-        ///tuya_uart_send_ble_dpdata(dp_data_array,dp_data_len);
+        tuya_ble_dp_data_report(dp_data_array,dp_data_len);
+
         break;
     case TUYA_BLE_CB_EVT_DP_DATA_REPORT_RESPONSE:
         TUYA_APP_LOG_INFO("received dp data report response result code =%d",event->dp_response_data.status);
-        //tuya_ble_dp_data_with_flag_report(sn,REPORT_FOR_CLOUD_PANEL,dp_data_array,dp_data_len); //2       
-        //sn++;
+
         break;
     case TUYA_BLE_CB_EVT_DP_DATA_WTTH_TIME_REPORT_RESPONSE:
         TUYA_APP_LOG_INFO("received dp data report response result code =%d",event->dp_response_data.status);
@@ -178,14 +174,16 @@ static void tuya_cb_handler(tuya_ble_cb_evt_param_t* event)
     case TUYA_BLE_CB_EVT_DP_QUERY:
         TUYA_APP_LOG_INFO("received TUYA_BLE_CB_EVT_DP_QUERY event");
         uart_to_ble_enable=1;
-        //tuya_ble_dp_data_report(dp_data_array,dp_data_len);
+
         break;
     case TUYA_BLE_CB_EVT_OTA_DATA:
         tuya_ota_proc(event->ota_data.type,event->ota_data.p_data,event->ota_data.data_len);
+
         break;
     case TUYA_BLE_CB_EVT_NETWORK_INFO:
         TUYA_APP_LOG_INFO("received net info : %s",event->network_data.p_data);
         tuya_ble_net_config_response(result);
+
         break;
     case TUYA_BLE_CB_EVT_WIFI_SSID:
 
@@ -199,9 +197,11 @@ static void tuya_cb_handler(tuya_ble_cb_evt_param_t* event)
     case TUYA_BLE_CB_EVT_DATA_PASSTHROUGH:
         TUYA_APP_LOG_HEXDUMP_DEBUG("received ble passthrough data :",event->ble_passthrough_data.p_data,event->ble_passthrough_data.data_len);
         tuya_ble_data_passthrough(event->ble_passthrough_data.p_data,event->ble_passthrough_data.data_len);
+
         break;
     default:
         TUYA_APP_LOG_WARNING("app_tuya_cb_queue msg: unknown event type 0x%04x",event->evt);
+
         break;
     }
 }
@@ -233,11 +233,9 @@ void tuya_ble_app_init(void)
     tuya_log_init();
     elog_set_output_enabled(true);
 
-    //tuya_flash_init();
     tuya_ota_init();
 
-    ty_factory_flag = 1;//���������¼��Ȩ ��Ȩ��
-    //tuya_timer_start(TIMER_FIRST,1000);
+    ty_factory_flag = 1;
 
     tuya_print_sysInfor();
     TUYA_APP_LOG_INFO("app version : "TY_APP_VER_STR);

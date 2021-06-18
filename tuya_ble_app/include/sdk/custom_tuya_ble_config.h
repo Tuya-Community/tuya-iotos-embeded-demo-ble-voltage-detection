@@ -27,7 +27,7 @@
 #define CUSTOM_TUYA_BLE_CONFIG_H__
 
 #include "tuya_ble_type.h"
-#include "tuya_ble_app_demo.h"
+#include "tuya_ble_app_main.h"
 
 
 #define TUYA_BLE_APP_VERSION_STRING    TY_APP_VER_STR
