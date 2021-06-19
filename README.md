@@ -52,17 +52,14 @@ This demo is based on the Tuya Smart Cloud Platform, Tuya Smart App, IoTOS Embed
 
 ### File description 
 
-| File name | Function |
+| File Name | Function |
 | :------------------------------: | :---------------------------------------------------------: |
-| tuya_ble_app_demo.c | The main application example file, which holds the SDK initialization functions, message handling functions, etc. | tuya_ble_app_demo.c
-| tuya_ble_app_demo.h | header file | tuya_ble_app_demo.h
-| tuya_ble_app_ota.c | OTA related code |
-| tuya_ble_app_ota.h | header file |
-| custom_app_product_test.c | Custom product test project related implementation |
-| custom_app_product_test.h | header file |
-| custom_app_uart_common_handler.c | UART common docking implementation code file, ignore if not used |
-| custom_app_uart_common_handler.h | header file |
-| custom_tuya_ble_config.h | application configuration file |
+| tuya_ble_app_main.c | application example main file, holding SDK initialization functions, message handling functions, etc. |
+| tuya_ble_app_main.h | header file | tuya_ble_app_main.c
+| tuya_voltage_detection.c | voltage_detection_related_code |
+| tuya_voltage_detection.h | header file |
+
+Translated with www.DeepL.com/Translator (free version)
 
 
 
